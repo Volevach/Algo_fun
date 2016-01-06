@@ -2,10 +2,12 @@
 //
 
 #include "stdafx.h"
+#include "FFT_1024.h"
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, int* argv[])
 {
-	return 0;
+    FFT_1024 myFFT = FFT_1024();
+    return 0;
 }
 

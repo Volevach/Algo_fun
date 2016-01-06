@@ -3,14 +3,14 @@
 
 FFT_1024::FFT_1024(void)
 {
-    short i = 0;
+    unsigned short i = 0;
     int d = 2;
         
     for(i = 0; i < BLOCK_LEN; i++)
     {
         unsigned char b = (unsigned char)(i & 0xFF);
-        b = (unsigned char)((b * 0x80200802ULL) & 0x0884422110ULL) * 0x0101010101ULL >> 32;
-        bitRevInd[i] = (short)(b << 2) + ((i & 0x100) >> 7) + ((i & 0x200) >> 9);
+        b = ((b * 0x80200802ULL) & 0x0884422110ULL) * 0x0101010101ULL >> 32;
+        bitRevInd[i] = (short)((short)b << 2) + ((i & 0x100) >> 7) + ((i & 0x200) >> 9);
     }
     
     //precalculate twiddle factors

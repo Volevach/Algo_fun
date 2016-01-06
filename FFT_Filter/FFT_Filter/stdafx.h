@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include "targetver.h"
-
 #include <stdio.h>
-#include <tchar.h>
+#include <math.h>
 
-
+#define BLOCK_LEN 1024
+#define STAGES 10
 
 // TODO: reference additional headers your program requires here

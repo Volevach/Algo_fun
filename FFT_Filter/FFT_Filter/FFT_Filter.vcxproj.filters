@@ -24,12 +24,24 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FFT_1024.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Complex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FFT_Filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FFT_1024.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Complex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

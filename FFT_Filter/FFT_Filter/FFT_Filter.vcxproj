@@ -79,10 +79,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Complex.h" />
+    <ClInclude Include="FFT_1024.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Complex.cpp" />
+    <ClCompile Include="FFT_1024.cpp" />
     <ClCompile Include="FFT_Filter.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
