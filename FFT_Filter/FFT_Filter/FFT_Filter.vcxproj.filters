@@ -33,6 +33,9 @@
     <ClInclude Include="BP_Filter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Wave_Proc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BP_Filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave_Proc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

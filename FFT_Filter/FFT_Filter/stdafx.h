@@ -6,6 +6,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 #define BLOCK_LEN 1024

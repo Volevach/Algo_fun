@@ -84,6 +84,7 @@
     <ClInclude Include="FFT_1024.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Wave_Proc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BP_Filter.cpp" />
@@ -91,6 +92,7 @@
     <ClCompile Include="FFT_1024.cpp" />
     <ClCompile Include="FFT_Filter.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Wave_Proc.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
