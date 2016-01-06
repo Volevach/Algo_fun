@@ -30,7 +30,7 @@ FFT_1024::~FFT_1024(void)
 
 }
 
-void FFT_1024::FFT_1024_mono(const short time_coef[BLOCK_LEN], Complex freq_coef[BLOCK_LEN])
+void FFT_1024::FFT_1024_mono(const unsigned short time_coef[BLOCK_LEN], Complex freq_coef[BLOCK_LEN])
 {
     int n, d, k, m;
     
@@ -63,7 +63,7 @@ void FFT_1024::FFT_1024_mono(const short time_coef[BLOCK_LEN], Complex freq_coef
     }
 }
 
-void FFT_1024::FFT_1024_stereo(const short time_coef[BLOCK_LEN][2], Complex freq_coef[BLOCK_LEN][2])
+void FFT_1024::FFT_1024_stereo(const unsigned short time_coef[BLOCK_LEN][2], Complex freq_coef[BLOCK_LEN][2])
 {
     int n, d, k, m;
     
@@ -102,7 +102,7 @@ void FFT_1024::FFT_1024_stereo(const short time_coef[BLOCK_LEN][2], Complex freq
     }
 }
 
-void FFT_1024::IFFT_1024_stereo(const Complex freq_coef[BLOCK_LEN][2], short time_coef[BLOCK_LEN][2])
+void FFT_1024::IFFT_1024_stereo(const Complex freq_coef[BLOCK_LEN][2], unsigned short time_coef[BLOCK_LEN][2])
 {
     int n, d, k, m;
     
@@ -159,7 +159,7 @@ void FFT_1024::bitReverse(const Complex a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2]
     }
 }
 
-void FFT_1024::bitReverse_to_complx2(const short a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
+void FFT_1024::bitReverse_to_complx2(const unsigned short a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
 {
     int i = 0;
     for(i = 0; i < BLOCK_LEN; i++)
@@ -169,7 +169,7 @@ void FFT_1024::bitReverse_to_complx2(const short a[BLOCK_LEN][2], Complex b[BLOC
     }
 }
 
-void FFT_1024::bitReverse_to_complx(const short a[BLOCK_LEN], Complex b[BLOCK_LEN])
+void FFT_1024::bitReverse_to_complx(const unsigned short a[BLOCK_LEN], Complex b[BLOCK_LEN])
 {
     int i = 0;
     for(i = 0; i < BLOCK_LEN; i++)

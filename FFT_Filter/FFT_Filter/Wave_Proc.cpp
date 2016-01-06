@@ -170,22 +170,50 @@ int Wave_Proc::parse_header()
     return 0;
 }
 
-int Wave_Proc::write_header(FILE *out, const wave_param_t *wave_param)
+int Wave_Proc::write_header(FILE *out)
 {
     fprintf(out,"RIFF");
-    write_long(out,wave_param->riff_length);
+    write_long(out,fmt_chunk.riff_length);
     fprintf(out,"WAVE");
     fprintf(out,"fmt ");
     write_long(out,16);
-    write_word(out,wave_param->format_type);
-    write_word(out,wave_param->channel_numbers);
-    write_long(out,wave_param->sample_rate);
-    write_long(out,wave_param->bytes_per_second);
-    write_word(out,wave_param->bytes_per_sample);
-    write_word(out,wave_param->bits_per_sample);
+    write_word(out,fmt_chunk.format_type);
+    write_word(out,fmt_chunk.channel_numbers);
+    write_long(out,fmt_chunk.sample_rate);
+    write_long(out,fmt_chunk.bytes_per_second);
+    write_word(out,fmt_chunk.bytes_per_sample);
+    write_word(out,fmt_chunk.bits_per_sample);
     fprintf(out,"data");
-    write_long(out,wave_param->data_length);
+    write_long(out,fmt_chunk.data_length);
     return 0;
 }
 
+int Wave_Proc::GetChannelNum()
+{
+    return fmt_chunk.channel_numbers;
+}
 
+int Wave_Proc::GetFormatType()
+{
+    return fmt_chunk.format_type;
+}
+
+int Wave_Proc::GetDataLen()
+{
+    return fmt_chunk.data_length;
+}
+
+unsigned short Wave_Proc::ReadWord()
+{
+    return read_word();
+}
+
+int Wave_Proc::WriteWord(FILE *out, int n)
+{
+    return write_word(out, n);
+}
+
+int Wave_Proc::WriteHeader(FILE *out)
+{
+    return write_header(out);
+}

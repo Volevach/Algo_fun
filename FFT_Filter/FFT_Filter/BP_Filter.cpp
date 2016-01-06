@@ -10,7 +10,7 @@ BP_Filter::BP_Filter(void)
     flt_scale_inv = Complex(1.0/65536.0, 1.0/65536.0);
 
     // zero pad the filter coef 
-    short filt_coef_zero[BLOCK_LEN] = {0};
+    unsigned short filt_coef_zero[BLOCK_LEN] = {0};
     for(i = 0; i < FILT_LEN; i++)
     {
         filt_coef_zero[i] = (filt_coef[i] * 65536);

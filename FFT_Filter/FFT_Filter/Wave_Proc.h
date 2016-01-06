@@ -25,9 +25,13 @@ public:
     } wave_param_t;
 
 
-    int write_header(FILE *out, const wave_param_t *wave_param);
-    int write_long(FILE *out, int n);
-    int write_word(FILE *out, int n);
+    int GetChannelNum();
+    int GetFormatType();
+    int GetDataLen();
+    unsigned short ReadWord();
+
+    int WriteWord(FILE *out, int n);
+    int WriteHeader(FILE *out);
 
 private:
     int parse_fmt_chunk();
@@ -36,6 +40,12 @@ private:
 
     unsigned int read_long();
     unsigned short read_word();
+    
+    int write_header(FILE *out);
+    int write_long(FILE *out, int n);
+    int write_word(FILE *out, int n);
+    
+
     int read_chars(char *s, int n);
 
     wave_param_t fmt_chunk;
