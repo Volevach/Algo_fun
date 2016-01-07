@@ -35,10 +35,10 @@ int main(int argc, int* argv[])
     // create the output file
     FILE *out;
     
-    char inname[150] = "../Wave/Input/input_short.wav";
+    char inname[150] = "../Wave/Input/TI_Skript.wav";
     char outname[150] = "../Wave/Output/output_data_seq_c.wav";
         
-    in = fopen(inname,"r");
+    in = fopen(inname,"rb");
     out = fopen(outname,"wb");    
 
     // Inititalize FFT
@@ -56,19 +56,19 @@ int main(int argc, int* argv[])
         return -1;                   // not stereo wave    
     }
     
-    MyWave->WriteHeader(out);
-    
     // get the amount of 994 samples blocks and the amount of remainder samples
     len = MyWave->GetDataLen()/4;
     rem = len % NET_LEN;
     loop_cnt = (int)((len - rem)/NET_LEN);
+
+    MyWave->WriteHeader(out, (len + rem)*4);
       
     for(t = 0; t < loop_cnt; t++)
     {
         for(i = 0; i < NET_LEN; i++)
         {
-            src_data[i][0] = MyWave->ReadWord();
-            src_data[i][1] = MyWave->ReadWord();
+            src_data[i][0] = MyWave->ReadWord(in);
+            src_data[i][1] = MyWave->ReadWord(in);
         }
             
         // zero pad
@@ -83,10 +83,11 @@ int main(int argc, int* argv[])
         MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
         // low pass filtering
-        MyFilt->low_pass(freq_coef, flt_sink);
+        // MyFilt->low_pass(freq_coef, flt_sink);
     
         // perform a 1024 ifft
-        MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+        //MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+        MyFFT->IFFT_1024_stereo(freq_coef, flt_data);
         
         // write first 30 samples with overlap buffer added
         for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
@@ -113,8 +114,8 @@ int main(int argc, int* argv[])
      //repeat for raminder
     for(i = 0; i < rem; i++)
     {
-        src_data[i][0] = MyWave->ReadWord();
-        src_data[i][1] = MyWave->ReadWord();
+        src_data[i][0] = MyWave->ReadWord(in);
+        src_data[i][1] = MyWave->ReadWord(in);
     }
          
     for(i = rem; i < BLOCK_LEN; i++)
@@ -129,10 +130,12 @@ int main(int argc, int* argv[])
     MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
     // low pass filtering
-    MyFilt->low_pass(freq_coef, flt_sink);
+    //MyFilt->low_pass(freq_coef, flt_sink);
     
     // perform a 1024 ifft
-    MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+    //MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+
+    MyFFT->IFFT_1024_stereo(freq_coef, flt_data);
     
     // write first 30 samples with overlap buffer added
     for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
