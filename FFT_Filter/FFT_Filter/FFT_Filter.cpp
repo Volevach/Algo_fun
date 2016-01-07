@@ -35,8 +35,8 @@ int main(int argc, int* argv[])
     // create the output file
     FILE *out;
     
-    char inname[150] = "../Wave/Input/TI_Skript.wav";
-    char outname[150] = "../Wave/Output/output_data_seq_c.wav";
+    char inname[150] = "../Wave/Input/input_data.wav";
+    char outname[150] = "../Wave/Output/output_data.wav";
         
     in = fopen(inname,"rb");
     out = fopen(outname,"wb");    
@@ -61,7 +61,7 @@ int main(int argc, int* argv[])
     rem = len % NET_LEN;
     loop_cnt = (int)((len - rem)/NET_LEN);
 
-    MyWave->WriteHeader(out, (len + rem)*4);
+    MyWave->WriteHeader(out, (len + NET_LEN)*4);
       
     for(t = 0; t < loop_cnt; t++)
     {
@@ -83,11 +83,11 @@ int main(int argc, int* argv[])
         MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
         // low pass filtering
-        // MyFilt->low_pass(freq_coef, flt_sink);
+        MyFilt->low_pass(freq_coef, flt_sink);
     
         // perform a 1024 ifft
-        //MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
-        MyFFT->IFFT_1024_stereo(freq_coef, flt_data);
+        MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+        
         
         // write first 30 samples with overlap buffer added
         for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
@@ -130,13 +130,12 @@ int main(int argc, int* argv[])
     MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
     // low pass filtering
-    //MyFilt->low_pass(freq_coef, flt_sink);
+    MyFilt->low_pass(freq_coef, flt_sink);
     
     // perform a 1024 ifft
-    //MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+    MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
 
-    MyFFT->IFFT_1024_stereo(freq_coef, flt_data);
-    
+   
     // write first 30 samples with overlap buffer added
     for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
     { 
