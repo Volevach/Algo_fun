@@ -37,9 +37,16 @@ int main(int argc, int* argv[])
     
     char inname[150] = "../Wave/Input/input_data.wav";
     char outname[150] = "../Wave/Output/output_data.wav";
-        
+
+    char wav_preface[44];
+
     in = fopen(inname,"rb");
     out = fopen(outname,"wb");    
+
+    for(i = 0; i < 44; i++)
+    {
+        wav_preface[i] = (char)getc(in);
+    }
 
     // Inititalize FFT
     FFT_1024* MyFFT = new FFT_1024(); 
@@ -48,7 +55,7 @@ int main(int argc, int* argv[])
     BP_Filter* MyFilt = new BP_Filter();
 
     // initialize the Wave processing class
-    Wave_Proc* MyWave = new Wave_Proc(in);
+    Wave_Proc* MyWave = new Wave_Proc(wav_preface);
             
     // currently supporting only stereo wave
     if((MyWave->GetFormatType() != 1) && (MyWave->GetChannelNum() != 2))

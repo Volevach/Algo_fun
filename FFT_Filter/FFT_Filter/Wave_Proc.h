@@ -11,6 +11,7 @@ class Wave_Proc
 public:
     Wave_Proc(void);
     Wave_Proc(FILE*);
+    Wave_Proc(char wav_preface[44]);
     ~Wave_Proc(void);
     
     int GetChannelNum();
