@@ -1,13 +1,13 @@
-CC = gcc
-CFLAGS = -g -O2 -I
+CC = g++
+CFLAGS = -g -O2
 DEPS = stdafx.h
 OBJECTS = FFT_Filter.o Complex.o FFT_1024.o Wave_Proc.o WaveParam.o BP_Filter.o
 
 FFT_Filter: $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o FFT_Filter.exe
+	$(CC) $(CFLAGS) $(OBJECTS) -o FFT_Filter
 
 clean:
 	-rm -f *.o core *.core
 	
-%.o : %.c $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c $<

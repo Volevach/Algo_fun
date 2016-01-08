@@ -35,13 +35,13 @@ int main(int argc, char* argv[])
     // create the output file
     FILE *out;
     
-    char inname[150] = "../Wave/Input/input_short.wav";
+    char inname[150] = "../Wave/Input/input_music.wav";
     char outname[150] = "../Wave/Output/output_data.wav";
 
     char wav_preface[44];
 
     in = fopen(inname,"rb");
-    out = fopen(outname,"wb");    
+    out = fopen(outname,"wb"); 
 
     for(i = 0; i < 44; i++)
     {
