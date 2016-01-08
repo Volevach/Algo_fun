@@ -3,7 +3,7 @@
 
 BP_Filter::BP_Filter(void)
 {
-    int i = 0;
+    unsigned int i = 0;
     FFT_1024 MyFFT = FFT_1024();
 
     flt_scale = Complex(65536.0, 65536.0);
@@ -13,7 +13,7 @@ BP_Filter::BP_Filter(void)
     unsigned short filt_coef_zero[BLOCK_LEN] = {0};
     for(i = 0; i < FILT_LEN; i++)
     {
-        filt_coef_zero[i] = (filt_coef[i] * 65536);
+        filt_coef_zero[i] = unsigned short(filt_coef[i] * 65536.0);
     }
     
     // transform into frequency domain
@@ -31,9 +31,9 @@ BP_Filter::~BP_Filter(void)
 {
 }
 
-void BP_Filter::low_pass(const Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2])
+void BP_Filter::low_pass(Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2])
 {
-    int i;
+    unsigned int i;
     for(i = 0; i < BLOCK_LEN; i++)
     {
         sink_sig[i][0] = compMul(src_sig[i][0], filt_coef_freq[i]);

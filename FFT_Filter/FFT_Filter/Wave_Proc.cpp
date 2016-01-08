@@ -37,7 +37,9 @@ Wave_Proc::Wave_Proc(char wav_preface[44])
         printf("This file is not a RIFF/WAV\n");
     }
     
-    fmt_chunk->riff_length= (unsigned int)wav_preface[4] + ((unsigned int)wav_preface[5] << 8) + ((unsigned int)wav_preface[6] << 16) + ((unsigned int)wav_preface[7] << 24);
+    fmt_chunk->riff_length = ((unsigned int)wav_preface[4] & 0xFF) + (((unsigned int)wav_preface[5] << 8) & 0xFF00)
+                          + (((unsigned int)wav_preface[6] << 16) & 0xFF0000) + (((unsigned int)wav_preface[7] << 24) & 0xFF000000);
+
     for(int i = 0; i < 4; i++)
     {
         fourcc[i] = wav_preface[i + 8];
@@ -54,7 +56,8 @@ Wave_Proc::Wave_Proc(char wav_preface[44])
     fmt_chunk->format_type = ((unsigned short)wav_preface[20] & 0xFF) + (((unsigned short)wav_preface[21] << 8) & 0xFF00);
     fmt_chunk->channel_numbers = ((unsigned short)wav_preface[22] & 0xFF) + (((unsigned short)wav_preface[23] << 8) & 0xFF00);
     fmt_chunk->sample_rate = ((unsigned int)wav_preface[24] & 0xFF) + (((unsigned int)wav_preface[25] << 8) & 0xFF00);// + ((unsigned int)wav_preface[26] << 16) + ((unsigned int)wav_preface[27] << 24);
-    fmt_chunk->bytes_per_second = (unsigned int)wav_preface[28] + ((unsigned int)wav_preface[29] << 8) + ((unsigned int)wav_preface[30] << 16) + ((unsigned int)wav_preface[31] << 24);
+    fmt_chunk->bytes_per_second = ((unsigned int)wav_preface[28] & 0xFF) + (((unsigned int)wav_preface[29] << 8) & 0xFF00)
+                          + (((unsigned int)wav_preface[30] << 16) & 0xFF0000) + (((unsigned int)wav_preface[31] << 24) & 0xFF000000);
     fmt_chunk->bytes_per_sample = ((unsigned short)wav_preface[32] & 0xFF) + (((unsigned short)wav_preface[33] << 8) & 0xFF00);
     fmt_chunk->bits_per_sample = ((unsigned short)wav_preface[34] & 0xFF) + (((unsigned short)wav_preface[35] << 8) & 0xFF00);
 
@@ -94,7 +97,8 @@ Wave_Proc::Wave_Proc(char wav_preface[44])
     printf(" Bits Per Sample: %d\n",fmt_chunk->bits_per_sample);
     printf("----------------------------\n");
     
-    fmt_chunk->data_length = (unsigned int)wav_preface[40] + ((unsigned int)wav_preface[41] << 8) + ((unsigned int)wav_preface[42] << 16) + ((unsigned int)wav_preface[43] << 24);
+    fmt_chunk->data_length = ((unsigned int)wav_preface[40] & 0xFF) + (((unsigned int)wav_preface[41] << 8) & 0xFF00)
+                          + (((unsigned int)wav_preface[42] << 16) & 0xFF0000) + (((unsigned int)wav_preface[43] << 24) & 0xFF000000);
 }
 
 
@@ -122,10 +126,10 @@ int Wave_Proc::read_chars(FILE* in, char *s, int n)
 int Wave_Proc::write_long(FILE *out, int n)
 {
 
-    putc((n&255),out);
-    putc(((n>>8)&255),out);
-    putc(((n>>16)&255),out);
-    putc(((n>>24)&255),out);
+    putc((n & 0xFF),out);
+    putc(((n>>8)& 0xFF),out);
+    putc(((n>>16)& 0xFF),out);
+    putc(((n>>24)& 0xFF),out);
 
     return 0;
 }
@@ -133,9 +137,8 @@ int Wave_Proc::write_long(FILE *out, int n)
 int Wave_Proc::write_word(FILE *out, int n)
 {
 
-    putc((n&255),out);
-    putc(((n>>8)&255),out);
-
+    putc((n & 0xFF),out);
+    putc(((n>>8) & 0xFF),out);
     return 0;
 }
 
@@ -153,7 +156,7 @@ unsigned int Wave_Proc::read_long(FILE* in)
 unsigned short Wave_Proc::read_word(FILE* in)
 {
     unsigned short t;
-    t = (unsigned short)(getc(in)) + ((unsigned short)(getc(in)) << 8);
+    t = ((unsigned short)getc(in) & 0xFF) + (((unsigned short)(getc(in)) << 8) & 0xFF00);
     return t;
 }
 

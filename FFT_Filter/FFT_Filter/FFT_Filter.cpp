@@ -35,7 +35,7 @@ int main(int argc, int* argv[])
     // create the output file
     FILE *out;
     
-    char inname[150] = "../Wave/Input/input_data.wav";
+    char inname[150] = "../Wave/Input/input_short.wav";
     char outname[150] = "../Wave/Output/output_data.wav";
 
     char wav_preface[44];
@@ -68,7 +68,7 @@ int main(int argc, int* argv[])
     rem = len % NET_LEN;
     loop_cnt = (int)((len - rem)/NET_LEN);
 
-    MyWave->WriteHeader(out, (len + NET_LEN)*4);
+    MyWave->WriteHeader(out, (loop_cnt + 1)*4*NET_LEN);
       
     for(t = 0; t < loop_cnt; t++)
     {
