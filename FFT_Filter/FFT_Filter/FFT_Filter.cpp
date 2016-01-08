@@ -16,7 +16,7 @@
 */
 
 
-int main(int argc, int* argv[])
+int main(int argc, char* argv[])
 {
     // init vars
     int t = 0, i = 0, rem = 0, len = 0, loop_cnt = 0;

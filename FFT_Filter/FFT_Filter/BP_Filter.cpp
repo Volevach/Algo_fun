@@ -13,7 +13,7 @@ BP_Filter::BP_Filter(void)
     unsigned short filt_coef_zero[BLOCK_LEN] = {0};
     for(i = 0; i < FILT_LEN; i++)
     {
-        filt_coef_zero[i] = unsigned short(filt_coef[i] * 65536.0);
+        filt_coef_zero[i] = (unsigned short)(filt_coef[i] * 65536.0);
     }
     
     // transform into frequency domain
