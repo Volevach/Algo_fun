@@ -20,17 +20,12 @@ Wave_Proc::Wave_Proc(char wav_preface[44])
 {
     fmt_chunk = new WaveParam();
 
-    int length;
     char fourcc[5];
     for(int i = 0; i < 4; i++)
     {
         fourcc[i] = wav_preface[i];
     }
     fourcc[4] = 0;
-
-
-    unsigned char riff_type[5];
-    
    
     if (strncmp(fourcc,"RIFF",4)!=0)
     {
