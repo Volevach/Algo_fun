@@ -43,5 +43,6 @@ unsigned char SobelOp::SobelNorm(unsigned char x, unsigned char y)
 
 unsigned char SobelOp::SobelFilt(unsigned char in[3][3])
 {
-    return SobelNorm(SobelX(in), SobelY(in));
+    unsigned char ret = SobelNorm(SobelX(in), SobelY(in));
+    return (ret > 255) ? ret : 255;
 }

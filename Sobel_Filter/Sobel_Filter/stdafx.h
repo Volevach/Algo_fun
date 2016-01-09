@@ -6,6 +6,12 @@
 #pragma once
 
 #include <stdio.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
+
+#define MAX_X 300
+#define MAX_Y 300
 
 // TODO: reference additional headers your program requires here
