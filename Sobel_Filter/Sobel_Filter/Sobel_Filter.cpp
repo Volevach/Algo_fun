@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "SobelOp.h"
 
 
 int main(int argc, char* argv[])
