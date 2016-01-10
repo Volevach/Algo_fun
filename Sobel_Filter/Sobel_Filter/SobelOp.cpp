@@ -16,7 +16,7 @@ unsigned char SobelOp::SobelX(unsigned char *in, unsigned int xOffset)
     short ret = 0;
     ret -= ((short)(in[0]) + 2*(short)(in[xOffset + 0]) + (short)(in[2*xOffset + 0]));
     ret += ((short)(in[2]) + 2*(short)(in[xOffset + 2]) + (short)(in[2*xOffset + 2]));
-    return (unsigned short)((ret>0)?ret:0);
+    return (unsigned char)((ret>0)?ret:0);
 }
 
 unsigned char SobelOp::SobelY(unsigned char *in, unsigned int xOffset)
@@ -24,7 +24,7 @@ unsigned char SobelOp::SobelY(unsigned char *in, unsigned int xOffset)
     short ret = 0;
     ret -= ((short)(in[0])         + 2*(short)(in[1]) +             (short)(in[2]));
     ret += ((short)(in[2*xOffset]) + 2*(short)(in[2*xOffset + 1]) + (short)(in[2*xOffset + 2]));
-    return (unsigned short)((ret>0)?ret:0);
+    return (unsigned char)((ret>0)?ret:0);
 }
 
 unsigned char SobelOp::SobelNorm(unsigned char x, unsigned char y)

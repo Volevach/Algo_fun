@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	{
 		input_bin = true;
 		rgb = true;
-		out << "P2" << std::endl;
+		out << "P5" << std::endl;
 	}
 	// Grey ASCII
 	else if (line.compare("P2") == 0)
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 	else if (line.compare("P5") == 0)
 	{
 		input_bin = true;
-		out << "P2" << std::endl;
+		out << "P5" << std::endl;
 	}
 	else
 	{
@@ -171,13 +171,9 @@ int main(int argc, char* argv[])
 	// write back to file 
 	if (input_bin)
 	{
-		for (unsigned int i = 0; i < size_x; i++)
-		{
-			for (unsigned int j = 0; j < size_y; j++)
-			{
-
-			}
-		}
+        out.close();
+        out.open(outputfile, std::ios::binary | std::ofstream::app);
+        out.write((char*)(&(image_filt[0][0])), size_y*size_x);
 	}
 	else
 	{
