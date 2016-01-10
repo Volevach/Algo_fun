@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     bool input_bin = false;
     bool rgb = false;
 
-    std::ifstream in("../Data/Input/electronics.ppm");
+    std::ifstream in("../Data/Input/electronics_grey.pgm");
     std::ofstream out("../Data/Output/output.pgm");
 
     std::string line;
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     {
         input_bin = true;
         rgb = true;
-        out << "P5" << std::endl;
+        out << "P2" << std::endl;
     }
     // Grey ASCII
     else if(line.compare("P2") == 0)
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     else if(line.compare("P5") == 0)
     {
         input_bin = true;
-        out << "P5" << std::endl;
+        out << "P2" << std::endl;
     }
     else
     {
@@ -101,6 +101,20 @@ int main(int argc, char* argv[])
         {
             for(unsigned int j = 0; j < size_y; j++)
             {
+                if(rgb)
+                {     
+                    char buff[3];
+                    in.read(buff, 3);
+                    val = (unsigned int)
+                            ((0.3  * ((float)(buff[0]) + 128.0))
+                           + (0.59 * ((float)(buff[1]) + 128.0))
+                           + (0.11 * ((float)(buff[2]) + 128.0)));
+                }
+                else
+                {
+                    in >> val;
+                }
+                image[i][j] = (unsigned char)(val);
 
             }
         }
@@ -131,14 +145,14 @@ int main(int argc, char* argv[])
     MySobel.SobelFiltImage(image, image_filt);
 
 
-    // write bacl to file 
+    // write back to file 
     if(input_bin)
     {
         for(unsigned int i = 0; i < size_x; i++)
         {
             for(unsigned int j = 0; j < size_y; j++)
             {
-    
+                
             }
         }
     }
