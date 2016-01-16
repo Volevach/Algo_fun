@@ -10,10 +10,10 @@ class BP_Filter
 public:
     BP_Filter(void);
     ~BP_Filter(void);
-    void low_pass(Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]); 
-    void high_pass(Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]);
-    void band_pass(Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]);
-    void sig_filter(Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2], Complex filter_par[BLOCK_LEN]);
+    void low_pass(const Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]); 
+    void high_pass(const Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]);
+    void band_pass(const Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2]);
+    void sig_filter(const Complex src_sig[BLOCK_LEN][2], Complex sink_sig[BLOCK_LEN][2], Complex filter_par[BLOCK_LEN]);
 
 private:
     Complex filt_coef_freq[BLOCK_LEN];   

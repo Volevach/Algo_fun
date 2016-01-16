@@ -10,25 +10,21 @@ class Wave_Proc
 {
 public:
     Wave_Proc(void);
-    Wave_Proc(FILE*);
     Wave_Proc(char wav_preface[44]);
     ~Wave_Proc(void);
     
     int GetChannelNum();
     int GetFormatType();
     int GetDataLen();
-    unsigned short ReadWord(FILE* in);
+    short ReadWord(FILE* in);
 
     int WriteWord(FILE *out, int n);
     int WriteHeader(FILE *out, unsigned int data_length);
 
 private:
-    int parse_fmt_chunk(FILE* in);
-    int parse_data_chunk(FILE* in);
-    int parse_header(FILE* in);
 
     unsigned int read_long(FILE* in);
-    unsigned short read_word(FILE* in);
+    short read_word(FILE* in);
     
     int write_header(FILE *out);
     int write_header(FILE *out, unsigned int data_length);

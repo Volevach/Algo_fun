@@ -8,13 +8,6 @@ Wave_Proc::Wave_Proc()
     fmt_chunk = new WaveParam();
 }
 
-Wave_Proc::Wave_Proc(FILE* in)
-{
-    fmt_chunk = new WaveParam();
-    parse_header(in);
-    parse_fmt_chunk(in);
-    fmt_chunk->data_length = parse_data_chunk(in);
-}
 
 Wave_Proc::Wave_Proc(char wav_preface[44])
 {
@@ -148,102 +141,18 @@ unsigned int Wave_Proc::read_long(FILE* in)
     return t;
 }
 
-unsigned short Wave_Proc::read_word(FILE* in)
+short Wave_Proc::read_word(FILE* in)
 {
-    unsigned short t;
-    t = ((unsigned short)getc(in) & 0xFF) + (((unsigned short)(getc(in)) << 8) & 0xFF00);
-    return t;
-}
+	char buff[2];
+	buff[0] = getc(in);
+	buff[1] = getc(in);
 
-int Wave_Proc::parse_fmt_chunk(FILE* in)
-{
-    int length;
-    char chunk_type[5];
-    read_chars(in, chunk_type,4);
-    length = read_long(in);
-    fmt_chunk->format_type = read_word(in);
-    fmt_chunk->channel_numbers = read_word(in);
-    fmt_chunk->sample_rate = read_long(in);
-    fmt_chunk->bytes_per_second = read_long(in);
-    fmt_chunk->bytes_per_sample = read_word(in);
-    fmt_chunk->bits_per_sample = read_word(in);
+	short ret = ((short*)buff)[0];
+	return ret;
 
-    printf("FMT Chunk\n");
-    printf("----------------------------\n");
-    printf("          Length: %d\n",length);
-    printf("     Format Type: ");
-    switch(fmt_chunk->format_type)
-    {
-        case 0:
-            printf("Mono\n"); 
-            break;
-        case 1:
-            printf("Stereo\n");
-            break;
-        default:
-            printf("unknown\n");
-            break;
-    }
-
-    printf(" Channel Numbers: %d\n",fmt_chunk->channel_numbers);
-    printf("     Sample Rate: %d\n",fmt_chunk->sample_rate);
-    printf("Bytes Per Second: %d\n",fmt_chunk->bytes_per_second);
-    printf("Bytes Per Sample: ");
-    switch (fmt_chunk->bytes_per_sample)
-    {
-        case 1:
-            printf("8 bit mono (%d)\n",fmt_chunk->bytes_per_sample); 
-            break;
-        case 2:
-            printf("8 bit stereo or 16 bit mono (%d)\n",fmt_chunk->bytes_per_sample);
-            break;
-        case 4:
-            printf("16 bit stereo (%d)\n",fmt_chunk->bytes_per_sample);
-            break;
-    }
-    
-    printf(" Bits Per Sample: %d\n",fmt_chunk->bits_per_sample);
-    printf("----------------------------\n");
-
-    return 0;
-}
-
-int Wave_Proc::parse_data_chunk(FILE* in)
-{
-    int length;
-    char riff_type[5];
-
-    read_chars(in, riff_type,4);
-    length=read_long(in);
-            
-    printf("DATA chunk\n");
-    printf("----------------------------\n");
-    printf("          Length: %d\n",length);
-
-    
-    return length;
-}
-
-int Wave_Proc::parse_header(FILE* in)
-{
-    char riff_type[5];
-    char fourcc[5];
-    read_chars(in, fourcc,4);
-    if (strncmp(fourcc,"RIFF",4)!=0)
-    {
-        printf("This file is not a RIFF/WAV\n");
-        return -1;
-    }
-    
-    fmt_chunk->riff_length=read_long(in);
-    read_chars(in, riff_type,4);
-    
-    printf("RIFF Header\n");
-    printf("----------------------------\n");
-    printf("          Length: %d\n",fmt_chunk->riff_length);
-    printf("            Type: %s\n",riff_type);
-    printf("----------------------------\n");
-    return 0;
+	//short t;
+    //t = ((unsigned short)getc(in) & 0xFF) + (((unsigned short)(getc(in)) << 8) & 0xFF00);
+    //return t;
 }
 
 int Wave_Proc::write_header(FILE *out)
@@ -297,7 +206,7 @@ int Wave_Proc::GetDataLen()
     return fmt_chunk->data_length;
 }
 
-unsigned short Wave_Proc::ReadWord(FILE* in)
+short Wave_Proc::ReadWord(FILE* in)
 {
     return read_word(in);
 }
