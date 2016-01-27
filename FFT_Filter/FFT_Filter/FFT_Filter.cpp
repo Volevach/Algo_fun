@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
         MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
         // low pass filtering
-        MyFilt->low_pass(freq_coef, flt_sink);
+        MyFilt->Filter(freq_coef, flt_sink);
     
         // perform a 1024 ifft
         MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
     MyFFT->FFT_1024_stereo(src_data, freq_coef);
     
     // low pass filtering
-    MyFilt->low_pass(freq_coef, flt_sink);
+    MyFilt->Filter(freq_coef, flt_sink);
     
     // perform a 1024 ifft
     MyFFT->IFFT_1024_stereo(flt_sink, flt_data);

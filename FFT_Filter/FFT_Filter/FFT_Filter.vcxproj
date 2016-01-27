@@ -76,9 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="BP_Filter.h" />
     <ClInclude Include="Complex.h" />
     <ClInclude Include="FFT_1024.h" />
