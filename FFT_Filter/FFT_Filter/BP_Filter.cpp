@@ -10,7 +10,7 @@
 BP_Filter::BP_Filter(void)
 {
     unsigned int i = 0;
-    FFT_1024 MyFFT = FFT_1024();
+    FFT_Trans MyFFT = FFT_Trans();
 
 	// compute the scaling = number of bits (2^16)
     c_flt_scale = Complex(65536.0, 65536.0);
@@ -26,7 +26,7 @@ BP_Filter::BP_Filter(void)
     }
     
     // transform the filter function into frequency domain
-    MyFFT.FFT_1024_mono(u_filt_coef_zero, c_filt_coef_freq);
+    MyFFT.FFT_Trans_mono(u_filt_coef_zero, c_filt_coef_freq);
 
 	// scale the filter function 
     for(i = 0; i < BLOCK_LEN; i++)

@@ -1,7 +1,12 @@
-#include "FFT_1024.h"
+// main class for the FFT implementation
+// 
+// inncludes a generic FFT implementastion
+// with stages parameter set to 10 it corresponds to a FFT of length 1024
+
+#include "FFT_Trans.h"
 
 
-FFT_1024::FFT_1024(void)
+FFT_Trans::FFT_Trans(void)
 {
     unsigned short i = 0;
     int d = 2;
@@ -25,12 +30,12 @@ FFT_1024::FFT_1024(void)
 }
 
 
-FFT_1024::~FFT_1024(void)
+FFT_Trans::~FFT_Trans(void)
 {
 
 }
 
-void FFT_1024::FFT_1024_mono(const short time_coef[BLOCK_LEN], Complex freq_coef[BLOCK_LEN])
+void FFT_Trans::FFT_Trans_mono(const short time_coef[BLOCK_LEN], Complex freq_coef[BLOCK_LEN])
 {
     int n, d, k, m;
     
@@ -63,7 +68,7 @@ void FFT_1024::FFT_1024_mono(const short time_coef[BLOCK_LEN], Complex freq_coef
     }
 }
 
-void FFT_1024::FFT_1024_stereo(const short time_coef[BLOCK_LEN][2], Complex freq_coef[BLOCK_LEN][2])
+void FFT_Trans::FFT_Trans_stereo(const short time_coef[BLOCK_LEN][2], Complex freq_coef[BLOCK_LEN][2])
 {
     int n, d, k, m;
     
@@ -102,7 +107,7 @@ void FFT_1024::FFT_1024_stereo(const short time_coef[BLOCK_LEN][2], Complex freq
     }
 }
 
-void FFT_1024::IFFT_1024_stereo(const Complex freq_coef[BLOCK_LEN][2], short time_coef[BLOCK_LEN][2])
+void FFT_Trans::IFFT_Trans_stereo(const Complex freq_coef[BLOCK_LEN][2], short time_coef[BLOCK_LEN][2])
 {
     int n, d, k, m;
     
@@ -149,7 +154,7 @@ void FFT_1024::IFFT_1024_stereo(const Complex freq_coef[BLOCK_LEN][2], short tim
 }
 
 
-void FFT_1024::bitReverse(const Complex a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
+void FFT_Trans::bitReverse(const Complex a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
 {
     int i = 0;
     for(i = 0; i < BLOCK_LEN; i++)
@@ -159,7 +164,7 @@ void FFT_1024::bitReverse(const Complex a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2]
     }
 }
 
-void FFT_1024::bitReverse_to_complx2(const short a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
+void FFT_Trans::bitReverse_to_complx2(const short a[BLOCK_LEN][2], Complex b[BLOCK_LEN][2])
 {
     int i = 0;
     for(i = 0; i < BLOCK_LEN; i++)
@@ -169,7 +174,7 @@ void FFT_1024::bitReverse_to_complx2(const short a[BLOCK_LEN][2], Complex b[BLOC
     }
 }
 
-void FFT_1024::bitReverse_to_complx(const short a[BLOCK_LEN], Complex b[BLOCK_LEN])
+void FFT_Trans::bitReverse_to_complx(const short a[BLOCK_LEN], Complex b[BLOCK_LEN])
 {
     int i = 0;
     for(i = 0; i < BLOCK_LEN; i++)

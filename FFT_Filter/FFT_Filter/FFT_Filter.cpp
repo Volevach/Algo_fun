@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "FFT_1024.h"
+#include "FFT_Trans.h"
 #include "BP_Filter.h"
 #include "Wave_Proc.h"
 
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     }
 
     // Inititalize FFT
-    FFT_1024* MyFFT = new FFT_1024(); 
+    FFT_Trans* MyFFT = new FFT_Trans(); 
     
     // Initialize the Filter
     BP_Filter* MyFilt = new BP_Filter();
@@ -87,13 +87,13 @@ int main(int argc, char* argv[])
         
         // run the filter process        
         // perform a 1024 point fft
-        MyFFT->FFT_1024_stereo(src_data, freq_coef);
+        MyFFT->FFT_Trans_stereo(src_data, freq_coef);
     
         // low pass filtering
         MyFilt->Filter(freq_coef, flt_sink);
     
         // perform a 1024 ifft
-        MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+        MyFFT->IFFT_Trans_stereo(flt_sink, flt_data);
         
         
         // write first 30 samples with overlap buffer added
@@ -134,13 +134,13 @@ int main(int argc, char* argv[])
    
     // run the filter process        
     // perform a 1024 point fft
-    MyFFT->FFT_1024_stereo(src_data, freq_coef);
+    MyFFT->FFT_Trans_stereo(src_data, freq_coef);
     
     // low pass filtering
     MyFilt->Filter(freq_coef, flt_sink);
     
     // perform a 1024 ifft
-    MyFFT->IFFT_1024_stereo(flt_sink, flt_data);
+    MyFFT->IFFT_Trans_stereo(flt_sink, flt_data);
 
    
     // write first 30 samples with overlap buffer added

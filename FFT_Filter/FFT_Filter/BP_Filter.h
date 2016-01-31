@@ -6,7 +6,7 @@
 #pragma once
 #include "stdafx.h"
 #include "complex.h"
-#include "FFT_1024.h"
+#include "FFT_Trans.h"
 
 #define FILT_LEN 31
 
