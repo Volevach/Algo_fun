@@ -1,3 +1,9 @@
+// main class for the FFT implementation
+// 
+// inncludes a generic FFT implementastion
+// with stages parameter set to 10 it corresponds to a FFT of length 1024
+
+
 #pragma once
 #include "stdafx.h"
 #include "Complex.h"
