@@ -34,10 +34,10 @@ private:
 };
 
 // helper function returning the sum of two complex numbers
-Complex compAdd(Complex a, Complex b);
+Complex CompAdd(Complex a, Complex b);
 
 // helper function returning the difference between two complex numbers
-Complex compSub(Complex a, Complex b);
+Complex CompSub(Complex a, Complex b);
 
 // helper function returning the product of two complex numbers
-Complex compMul(Complex a, Complex b);
+Complex CompMul(Complex a, Complex b);

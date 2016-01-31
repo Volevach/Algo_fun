@@ -22,9 +22,9 @@ int main(int argc, char* argv[])
     int t = 0, i = 0, rem = 0, len = 0, loop_cnt = 0;
     
     // crete the overlap add buffer
-    unsigned short buffer[BLOCK_LEN - NET_LEN][2] = {0};
-    unsigned short src_data[BLOCK_LEN][2];
-    unsigned short flt_data[BLOCK_LEN][2];
+    short buffer[BLOCK_LEN - NET_LEN][2] = {0};
+    short src_data[BLOCK_LEN][2];
+    short flt_data[BLOCK_LEN][2];
    
     Complex freq_coef[BLOCK_LEN][2];
     Complex flt_sink[BLOCK_LEN][2];
@@ -87,13 +87,13 @@ int main(int argc, char* argv[])
         
         // run the filter process        
         // perform a 1024 point fft
-        MyFFT->FFT_Trans_stereo(src_data, freq_coef);
+        MyFFT->FFT_Stereo(src_data, freq_coef);
     
         // low pass filtering
         MyFilt->Filter(freq_coef, flt_sink);
     
         // perform a 1024 ifft
-        MyFFT->IFFT_Trans_stereo(flt_sink, flt_data);
+        MyFFT->IFFT_Stereo(flt_sink, flt_data);
         
         
         // write first 30 samples with overlap buffer added
@@ -134,13 +134,13 @@ int main(int argc, char* argv[])
    
     // run the filter process        
     // perform a 1024 point fft
-    MyFFT->FFT_Trans_stereo(src_data, freq_coef);
+    MyFFT->FFT_Stereo(src_data, freq_coef);
     
     // low pass filtering
     MyFilt->Filter(freq_coef, flt_sink);
     
     // perform a 1024 ifft
-    MyFFT->IFFT_Trans_stereo(flt_sink, flt_data);
+    MyFFT->IFFT_Stereo(flt_sink, flt_data);
 
    
     // write first 30 samples with overlap buffer added

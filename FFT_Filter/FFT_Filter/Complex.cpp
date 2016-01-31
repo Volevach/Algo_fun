@@ -46,19 +46,19 @@ Complex Complex::ConjCompl()
 
 
 // helper function returning the sum of two complex numbers
-Complex compAdd(Complex a, Complex b)
+Complex CompAdd(Complex a, Complex b)
 {
     return Complex(a.GetReal() + b.GetReal(), a.GetImag() + b.GetImag());
 }
 
 // helper function returning the difference between two complex numbers
-Complex compSub(Complex a, Complex b)
+Complex CompSub(Complex a, Complex b)
 {
     return Complex(a.GetReal() - b.GetReal(), a.GetImag() - b.GetImag());
 }
 
 // helper function returning the product of two complex numbers
-Complex compMul(Complex a, Complex b)
+Complex CompMul(Complex a, Complex b)
 {
 	// returns (a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re)
     return Complex((a.GetReal() * b.GetReal()) - (a.GetImag() * b.GetImag()), (a.GetReal() * b.GetImag()) + (a.GetImag() * b.GetReal()));

@@ -30,6 +30,9 @@
     <ClInclude Include="WaveParam.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FFT_Trans.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -50,13 +53,8 @@
     <ClCompile Include="WaveParam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FFT_Trans,cpp">
+    <ClCompile Include="FFT_Trans.cpp">
       <Filter>Source Files</Filter>
-    </None>
-    <None Include="FFT_Trans,h">
-      <Filter>Header Files</Filter>
-    </None>
+    </ClCompile>
   </ItemGroup>
 </Project>
