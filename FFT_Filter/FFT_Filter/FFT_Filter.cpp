@@ -22,12 +22,12 @@ int main(int argc, char* argv[])
     int t = 0, i = 0, rem = 0, len = 0, loop_cnt = 0;
     
     // crete the overlap add buffer
-    short buffer[BLOCK_LEN - NET_LEN][2] = {0};
-    short src_data[BLOCK_LEN][2];
-    short flt_data[BLOCK_LEN][2];
+    short i_buffer[BLOCK_LEN - NET_LEN][2] = {0};
+    short i_src_data[BLOCK_LEN][2];
+    short i_flt_data[BLOCK_LEN][2];
    
-    Complex freq_coef[BLOCK_LEN][2];
-    Complex flt_sink[BLOCK_LEN][2];
+    Complex c_freq_coef[BLOCK_LEN][2];
+    Complex c_flt_sink[BLOCK_LEN][2];
 
     // open the wave file to process
     FILE *in;
@@ -35,17 +35,19 @@ int main(int argc, char* argv[])
     // create the output file
     FILE *out;
     
-    char inname[150] = "../Wave/Input/input_music.wav";
-    char outname[150] = "../Wave/Output/output_data.wav";
+    char s_inname[150] = "../Wave/Input/input_music.wav";
+    char s_outname[150] = "../Wave/Output/output_data.wav";
 
-    char wav_preface[44];
+    char s_wav_preface[44];
 
-    in = fopen(inname,"rb");
-    out = fopen(outname,"wb"); 
+	// open files
+    in = fopen(s_inname,"rb");
+    out = fopen(s_outname,"wb"); 
 
+	// get wave header
     for(i = 0; i < 44; i++)
     {
-        wav_preface[i] = (char)getc(in);
+        s_wav_preface[i] = (char)getc(in);
     }
 
     // Inititalize FFT
@@ -55,7 +57,7 @@ int main(int argc, char* argv[])
     BP_Filter* MyFilt = new BP_Filter();
 
     // initialize the Wave processing class
-    Wave_Proc* MyWave = new Wave_Proc(wav_preface);
+    Wave_Proc* MyWave = new Wave_Proc(s_wav_preface);
             
     // currently supporting only stereo wave
     if((MyWave->GetFormatType() != 1) && (MyWave->GetChannelNum() != 2))
@@ -74,87 +76,87 @@ int main(int argc, char* argv[])
     {
         for(i = 0; i < NET_LEN; i++)
         {
-            src_data[i][0] = MyWave->ReadWord(in);
-            src_data[i][1] = MyWave->ReadWord(in);
+            i_src_data[i][0] = MyWave->ReadWord(in);
+            i_src_data[i][1] = MyWave->ReadWord(in);
         }
             
         // zero pad
         for(i = NET_LEN; i < BLOCK_LEN; i++)
         {
-            src_data[i][0] = 0;
-            src_data[i][1] = 0;
+            i_src_data[i][0] = 0;
+            i_src_data[i][1] = 0;
         }
         
         // run the filter process        
         // perform a 1024 point fft
-        MyFFT->FFT_Stereo(src_data, freq_coef);
+        MyFFT->FFT_Stereo(i_src_data, c_freq_coef);
     
         // low pass filtering
-        MyFilt->Filter(freq_coef, flt_sink);
+        MyFilt->Filter(c_freq_coef, c_flt_sink);
     
         // perform a 1024 ifft
-        MyFFT->IFFT_Stereo(flt_sink, flt_data);
+        MyFFT->IFFT_Stereo(c_flt_sink, i_flt_data);
         
         
         // write first 30 samples with overlap buffer added
         for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
         { 
-            MyWave->WriteWord(out,flt_data[i][0] + buffer[i][0]); 
-            MyWave->WriteWord(out,flt_data[i][1] + buffer[i][1]);
+            MyWave->WriteWord(out,i_flt_data[i][0] + i_buffer[i][0]);
+            MyWave->WriteWord(out,i_flt_data[i][1] + i_buffer[i][1]);
         }
             
             // write the next 964 samles unaltered
         for(i = (BLOCK_LEN - NET_LEN); i < NET_LEN; i++)
         { 
-            MyWave->WriteWord(out,flt_data[i][0]); 
-            MyWave->WriteWord(out,flt_data[i][1]);
+            MyWave->WriteWord(out,i_flt_data[i][0]); 
+            MyWave->WriteWord(out,i_flt_data[i][1]);
         }
             
         // store the last 30 samples into overlap add buffer
         for(i = NET_LEN; i < BLOCK_LEN; i++)
         {
-            buffer[i - NET_LEN][0] = flt_data[i][0];
-            buffer[i - NET_LEN][1] = flt_data[i][1];   
+			i_buffer[i - NET_LEN][0] = i_flt_data[i][0];
+			i_buffer[i - NET_LEN][1] = i_flt_data[i][1];
         }
     }
      
      //repeat for raminder
     for(i = 0; i < rem; i++)
     {
-        src_data[i][0] = MyWave->ReadWord(in);
-        src_data[i][1] = MyWave->ReadWord(in);
+        i_src_data[i][0] = MyWave->ReadWord(in);
+        i_src_data[i][1] = MyWave->ReadWord(in);
     }
          
     for(i = rem; i < BLOCK_LEN; i++)
     {
-        src_data[i][0] = 0;
-        src_data[i][1] = 0;
+		i_src_data[i][0] = 0;
+		i_src_data[i][1] = 0;
     }
     
    
     // run the filter process        
     // perform a 1024 point fft
-    MyFFT->FFT_Stereo(src_data, freq_coef);
+    MyFFT->FFT_Stereo(i_src_data, c_freq_coef);
     
     // low pass filtering
-    MyFilt->Filter(freq_coef, flt_sink);
+    MyFilt->Filter(c_freq_coef, c_flt_sink);
     
     // perform a 1024 ifft
-    MyFFT->IFFT_Stereo(flt_sink, flt_data);
+    MyFFT->IFFT_Stereo(c_flt_sink, i_flt_data);
 
    
     // write first 30 samples with overlap buffer added
     for(i = 0; i < (BLOCK_LEN - NET_LEN); i++)
     { 
-        MyWave->WriteWord(out,flt_data[i][0] + buffer[i][0]); 
-        MyWave->WriteWord(out,flt_data[i][1] + buffer[i][1]);
+        MyWave->WriteWord(out, i_flt_data[i][0] + i_buffer[i][0]);
+        MyWave->WriteWord(out, i_flt_data[i][1] + i_buffer[i][1]);
     }
             
     // write the next 964 samles unaltered
     for(i = (BLOCK_LEN - NET_LEN); i < NET_LEN; i++)
     { 
-        MyWave->WriteWord(out,flt_data[i][0]); 
-        MyWave->WriteWord(out,flt_data[i][1]);
+        MyWave->WriteWord(out,i_flt_data[i][0]); 
+        MyWave->WriteWord(out,i_flt_data[i][1]);
     }
 
     fclose(in);
